@@ -10,6 +10,20 @@ Entstanden im Oktober 2026 für ein Balkonkraftwerk mit Growatt-NOAH-Speicher au
 Raspberry Pi (Daten über noah-mqtt und Mosquitto, Hausverbrauch aus Home Assistant). Seitdem
 läuft es dort rund um die Uhr.
 
+![Dashboard im Simulationsmodus: Kennzahlen, Energiefluss, Tagesübersicht](docs/screenshots/dashboard.png)
+
+| | |
+|---|---|
+| ![Batteriespeicher](docs/screenshots/battery.png) | ![Geräte und Messpunkte](docs/screenshots/devices.png) |
+| Batteriespeicher mit Ladezustand und Leistung | Geräte und Messpunkte mit Rolle, Quelle und Status |
+| ![Datenquellen](docs/screenshots/integrations.png) | |
+| Datenquellen mit Test und Entdecken | |
+
+Alle Bilder zeigen die eingebaute Simulation, keine echten Messwerte.
+
+**Weiterlesen:** [Konfiguration](docs/konfiguration.md) mit allen Feldern, Rollen und Einheiten ·
+[Architektur](docs/architektur.md) mit Datenfluss und Designentscheidungen.
+
 ## Was es kann
 
 - **Rollenbasierte Messpunkte.** Jeder Messpunkt bekommt eine Rolle wie `pv_power`, `house_power`,
@@ -84,6 +98,40 @@ tools/backfill_prometheus.py
 | POST | `/api/admin/login`, `/validate`, `/integrations/{id}/test`, `/discover` | Verwaltung |
 | PUT | `/api/admin/settings` | Einstellungen |
 | GET/POST | `/api/admin/backup`, `/restore`, `/db-backup`, `/rollup/reset` | Sicherung |
+
+## Betrieb als Dienst
+
+Auf einem Raspberry Pi oder einem anderen Linux-Rechner hält eine systemd-Unit SOLARIS am Laufen:
+
+```ini
+# /etc/systemd/system/solaris.service
+[Unit]
+Description=SOLARIS Energie-Dashboard
+After=network-online.target
+
+[Service]
+WorkingDirectory=/opt/solaris
+EnvironmentFile=/opt/solaris/.env
+ExecStart=/opt/solaris/.venv/bin/uvicorn backend.app:app --host 127.0.0.1 --port 8095
+Restart=on-failure
+User=solaris
+
+[Install]
+WantedBy=multi-user.target
+```
+
+Für den Zugriff aus dem Heimnetz am besten einen Reverse-Proxy wie nginx davorsetzen, statt
+uvicorn direkt auf `0.0.0.0` zu binden.
+
+## Fehlerbehebung
+
+| Symptom | Ursache und Lösung |
+|---|---|
+| `/api/overview` liefert 500, im Log `ZoneInfoNotFoundError` | unter Windows fehlt die Zeitzonendatenbank: `pip install tzdata` (steht in `requirements.txt`) |
+| Verwaltung meldet 503 | `SOLARIS_ADMIN_TOKEN` ist in `.env` nicht gesetzt |
+| Start bricht mit Validierungsfehler ab | Meldung nennt Messpunkt und Feld, häufig eine fehlende `sign_convention` oder eine doppelt belegte Rolle |
+| Werte als „veraltet“ markiert | Quelle liefert seltener als `interval`; `interval` oder `stale_after` anpassen |
+| Bilanzwarnung ohne echten Fehler | Messpunkte mit `partial: true` kennzeichnen oder `balance_tolerance_*` erhöhen |
 
 ## Stand und Grenzen
 
