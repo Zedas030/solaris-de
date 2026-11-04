@@ -133,6 +133,23 @@ uvicorn direkt auf `0.0.0.0` zu binden.
 | Werte als „veraltet“ markiert | Quelle liefert seltener als `interval`; `interval` oder `stale_after` anpassen |
 | Bilanzwarnung ohne echten Fehler | Messpunkte mit `partial: true` kennzeichnen oder `balance_tolerance_*` erhöhen |
 
+## Zugangsdaten und eigene Werte
+
+Im Repo stehen keine echten Zugangsdaten und keine echte Anlagenkonfiguration. Die Konfiguration der
+Originalanlage (mit Seriennummer des Speichers) und die Datenbank sind bewusst nicht enthalten. Die
+Beispielkonfiguration nutzt nur die Simulation.
+
+| Was | Im Repo | Wo der echte Wert hingehört |
+|---|---|---|
+| Admin-Token für die Verwaltung | Platzhalter `<zufaelliger-langer-wert>` in [`.env.example`](.env.example) | `.env` im Projektordner als `SOLARIS_ADMIN_TOKEN` |
+| Home-Assistant-Token | Platzhalter `<home-assistant-token>` | `.env` als `SOLARIS_HA_TOKEN`, in der Integration steht nur `"token_env": "SOLARIS_HA_TOKEN"` |
+| MQTT-Benutzer und -Passwort | Platzhalter `<benutzer>`, `<passwort>` | `.env` als `SOLARIS_MQTT_USERNAME`, `SOLARIS_MQTT_PASSWORD`, in der Integration per `username_env`/`password_env` |
+| Adresse des MQTT-Brokers, URLs von Prometheus und Home Assistant | Beispielwerte `127.0.0.1`, `homeassistant.local` | `integrations` in `data/config/solaris.json` (Vorlage: [`solaris.example.json`](data/config/solaris.example.json)) |
+| Geräte, Seriennummern, MQTT-Topics, Entitäten | simulierte Geräte ohne Seriennummer | `devices` und `datapoints` in `data/config/solaris.json`, Felder in [docs/konfiguration.md](docs/konfiguration.md) |
+
+`.env` und `data/config/solaris.json` stehen in `.gitignore` und landen nie im Repo. Die Prüfung beim
+Start lehnt echte Passwörter in den `*_env`-Feldern ab, dort darf nur der Name einer Variable stehen.
+
 ## Stand und Grenzen
 
 - Ein Backend-Ordner `tests/` ist angelegt, enthält aber noch keine Tests. Geprüft wurde bisher
