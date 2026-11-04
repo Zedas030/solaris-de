@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "site": {
+    "name": "Beispielanlage (Simulation)",
+    "timezone": "Europe/Berlin",
+    "pv_peak_kwp": 1.6,
+    "battery_capacity_kwh": 2.0,
+    "battery_reserve_soc": 10
+  },
+  "settings": {
+    "display": {"power_unit": "auto", "kw_threshold_w": 1000, "energy_unit": "kWh"},
+    "thresholds": {"soc_high": 60, "soc_low": 20, "balance_tolerance_w": 60, "balance_tolerance_pct": 15,
+                   "balance_min_duration_s": 300, "phase_imbalance_pct": 30},
+    "retention": {"raw_days": 180, "events_days": 365},
+    "storage": {"heartbeat_s": 60, "max_gap_s": 600},
+    "tick_s": 5,
+    "default_chart_range": "today"
+  },
+  "integrations": [
+    {"id": "demo", "type": "demo", "name": "Simulation", "enabled": true, "interval": 5,
+     "notes": "Erzeugt einen Tagesverlauf aus PV, Hausverbrauch, Speicher und Netz. Werte werden als Simulation markiert und nicht gespeichert."},
+    {"id": "mqtt_local", "type": "mqtt", "name": "Mosquitto (Beispiel, aus)", "enabled": false,
+     "host": "127.0.0.1", "port": 1883, "username_env": "SOLARIS_MQTT_USERNAME", "password_env": "SOLARIS_MQTT_PASSWORD",
+     "notes": "Beispiel für einen lokalen Broker, etwa mit noah-mqtt fuer einen Growatt-NOAH-Speicher."},
+    {"id": "ha_prometheus", "type": "prometheus", "name": "Home Assistant über Prometheus (Beispiel, aus)", "enabled": false,
+     "url": "http://127.0.0.1:9090", "job": "homeassistant", "interval": 30},
+    {"id": "ha_rest", "type": "homeassistant", "name": "Home Assistant REST-API (Beispiel, aus)", "enabled": false,
+     "url": "http://homeassistant.local:8123", "token_env": "SOLARIS_HA_TOKEN", "interval": 30}
+  ],
+  "devices": [
+    {"id": "sim_speicher", "name": "Simulierter Speicher-Wechselrichter", "manufacturer": "Simulation", "model": "Demo 1600",
+     "device_class": "battery_inverter", "protocol": "Simulation",
+     "availability": {"datapoint": "sim_status", "offline_values": ["offline"]},
+     "notes": "Balkonkraftwerk mit Speicher, rein simuliert."},
+    {"id": "sim_haus", "name": "Simulierter Hausanschluss", "manufacturer": "Simulation", "device_class": "grid_meter", "protocol": "Simulation"}
+  ],
+  "datapoints": [
+    {"id": "sim_pv_power", "name": "PV-Leistung", "device": "sim_speicher", "integration": "demo",
+     "source": {"signal": "pv"}, "unit": "W", "kind": "power", "role": "pv_power", "min": 0, "interval": 5, "store": false},
+    {"id": "sim_output_power", "name": "AC-Ausgangsleistung", "device": "sim_speicher", "integration": "demo",
+     "source": {"signal": "output"}, "unit": "W", "kind": "power", "role": "inverter_output_power", "interval": 5, "store": false},
+    {"id": "sim_battery_power", "name": "Batterieleistung", "device": "sim_speicher", "integration": "demo",
+     "source": {"signal": "battery"}, "unit": "W", "kind": "power", "role": "battery_power",
+     "sign_convention": "charge_positive", "interval": 5, "store": false},
+    {"id": "sim_soc", "name": "Ladezustand", "device": "sim_speicher", "integration": "demo",
+     "source": {"signal": "soc"}, "unit": "%", "kind": "percent", "role": "battery_soc", "min": 0, "max": 100, "interval": 5, "store": false},
+    {"id": "sim_status", "name": "Betriebszustand", "device": "sim_speicher", "integration": "demo",
+     "source": {"signal": "status"}, "unit": "", "kind": "state", "role": "inverter_status", "interval": 5, "store": false},
+    {"id": "sim_house_power", "name": "Hausverbrauch", "device": "sim_haus", "integration": "demo",
+     "source": {"signal": "house"}, "unit": "W", "kind": "power", "role": "house_power", "min": 0, "interval": 5, "store": false},
+    {"id": "sim_grid_power", "name": "Netzleistung", "device": "sim_haus", "integration": "demo",
+     "source": {"signal": "grid"}, "unit": "W", "kind": "power", "role": "grid_power",
+     "sign_convention": "import_positive", "interval": 5, "store": false}
+  ]
+}
