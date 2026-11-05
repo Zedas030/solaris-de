@@ -21,7 +21,7 @@ export async function render(root, app) {
         h('thead', h('tr', h('th', 'Zeitpunkt'), h('th', 'Schweregrad'), h('th', 'Beschreibung'), h('th', 'Gerät'), h('th', 'Messpunkt'))),
         h('tbody', d.events.map((e) => h('tr',
           h('td.small.num', F.dateTime(e.ts)), h('td', pill(...SEV[e.severity])),
-          h('td', e.message, e.details ? h('details', h('summary.xs.faint', 'Details'), h('pre.mono', { style: { whiteSpace: 'pre-wrap', margin: '4px 0 0' } }, JSON.stringify(e.details, null, 2)))) : null),
+          h('td', e.message, e.details ? h('details', h('summary.xs.faint', 'Details'), h('pre.mono', { style: { whiteSpace: 'pre-wrap', margin: '4px 0 0' } }, JSON.stringify(e.details, null, 2))) : null),
           h('td.small', e.device ? (app.device(e.device)?.name || e.device) : '–'), h('td.small.mono', e.datapoint || '–'))))))
         : h('div.empty', sev ? 'Keine Ereignisse dieses Schweregrads.' : 'Noch keine Ereignisse protokolliert.'));
       clear(pager).append(

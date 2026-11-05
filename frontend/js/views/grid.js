@@ -8,7 +8,7 @@ export async function render(root, app) {
   const kpis = h('div.grid.kpis');
   const phases = h('div');
   const gp = app.byRole('grid_power')[0];
-  root.append(
+  clear(root).append(
     !configured ? card('Netzanschluss nicht konfiguriert', {},
       notice('info', 'Es ist kein Netz- bzw. Zweirichtungszähler eingebunden. Netzbezug und Einspeisung werden deshalb nicht angezeigt und nicht geschätzt.'),
       h('p', 'Für Netzbezug, Einspeisung, Eigenverbrauchsquote und Autarkiegrad wird ein Messpunkt am Netzanschluss benötigt, z. B.:'),

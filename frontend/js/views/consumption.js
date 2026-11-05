@@ -7,7 +7,7 @@ export async function render(root, app) {
   const kpis = h('div.grid.kpis');
   const stats = h('div.grid.kpis');
   const consumers = h('div');
-  root.append(
+  clear(root).append(
     house?.partial ? notice('warn', h('b', 'Teilmessung: '), house.description || 'Der Hausverbrauch ist die Summe einzelner Messstellen. Nicht erfasste Verbraucher fehlen, daher ist er kein Gesamtverbrauch.') : null,
     kpis,
     historyCard(app, { title: 'Verbrauchsverlauf', key: 'cons-power', spec: [{ role: 'house_power', name: 'Hausverbrauch', color: HEX.house, area: true },
@@ -61,7 +61,7 @@ export async function render(root, app) {
       h('thead', h('tr', h('th', 'Verbraucher'), h('th.r', 'Leistung'), h('th', { style: { width: '30%' } }, 'Anteil'), h('th.r', 'Heute'), h('th', 'Status'))),
       h('tbody', rows.map((r) => h('tr', h('td', r.p.name), h('td.r.num', r.w !== null ? F.powerStr(r.w) : '–'),
         h('td', h('div.bar', { style: { '--c': 'var(--house)' } }, h('i', { style: { width: `${((r.w ?? 0) / max) * 100}%` } })), h('div.xs.faint', r.w !== null && sum > 0 ? `${F.fmtNumber(r.w / sum * 100, 0)} % der erfassten Summe` : '')),
-        h('td.r.num', r.kwh !== null ? F.energyStr(r.kwh) : '–'), h('td', pill(F.qualityLabel(r.c.quality || 'unavailable'), F.qualityClass(r.c.quality || 'unavailable'))))))),
+        h('td.r.num', r.kwh !== null ? F.energyStr(r.kwh) : '–'), h('td', pill(F.qualityLabel(r.c.quality || 'unavailable'), F.qualityClass(r.c.quality || 'unavailable')))))))),
     h('p.small.muted', `Summe der ${rows.filter((r) => r.w !== null).length} aktuell gemessenen Verbraucher: ${F.powerStr(sum)}`,
       tot !== null ? ` · Messpunkt „${app.byRole('house_power')[0].name}“: ${F.powerStr(tot)}` : '',
       '. Die Summe einzelner Verbraucher wird nicht als Gesamtverbrauch ausgegeben.'));
