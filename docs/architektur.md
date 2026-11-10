@@ -1,31 +1,9 @@
 # Architektur
 
-```mermaid
-flowchart LR
-  subgraph Quellen
-    MQ[MQTT-Broker]
-    PR[Prometheus]
-    HA[Home Assistant REST]
-    SIM[Simulation]
-  end
-  subgraph Backend [FastAPI-Backend]
-    INT[integrations/*<br/>je Quelle ein Task]
-    COL[collector<br/>Umrechnung, Plausibilität, Veraltung]
-    EN[energy · statistics · summary<br/>Bilanz nach Rollen]
-    EV[events<br/>Bilanz, Schieflast, Temperatur, Ausfälle]
-    ST[(SQLite<br/>Rohwerte, Stundenwerte, Ereignisse)]
-    API[/api · /api/admin · SSE/]
-  end
-  UI[Frontend<br/>HTML, CSS, JS ohne Build]
-  MQ --> INT
-  PR --> INT
-  HA --> INT
-  SIM --> INT
-  INT --> COL --> ST
-  COL --> EN --> API
-  COL --> EV --> ST
-  ST --> API --> UI
-```
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="assets/architektur-dark.svg">
+  <img src="assets/architektur-light.svg" alt="Architektur: Quellen, FastAPI-Backend mit integrations, collector, energy, events, SQLite und API, Frontend" width="100%">
+</picture>
 
 ## Ablauf
 

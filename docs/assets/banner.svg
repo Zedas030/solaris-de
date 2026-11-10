@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="560" viewBox="0 0 1600 560" role="img" aria-label="SOLARIS: lokales Energie-Dashboard für PV-Anlage und Speicher">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1B2A44"/>
+      <stop offset="0.55" stop-color="#121C30"/>
+      <stop offset="1" stop-color="#0B1220"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#FCC741" stop-opacity="0.34"/>
+      <stop offset="0.6" stop-color="#FCC741" stop-opacity="0.06"/>
+      <stop offset="1" stop-color="#FCC741" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="disc" cx="0.38" cy="0.32" r="0.8">
+      <stop offset="0" stop-color="#604809"/>
+      <stop offset="1" stop-color="#0E1626"/>
+    </radialGradient>
+    <clipPath id="card"><rect width="1600" height="560" rx="32"/></clipPath>
+  </defs>
+  <g clip-path="url(#card)">
+    <rect width="1600" height="560" fill="url(#bg)"/>
+    <circle cx="1220" cy="280" r="330" fill="url(#glow)"/>
+    <g fill="none" stroke="#FCCD55" stroke-linecap="round">
+      <circle cx="1220" cy="280" r="150" stroke-opacity="0.55" stroke-width="1.5"/>
+      <circle cx="1220" cy="280" r="178" stroke-opacity="0.28" stroke-width="1.25"/>
+      <circle cx="1220" cy="280" r="210" stroke-opacity="0.14" stroke-width="1"/>
+    </g>
+    <circle cx="1220" cy="280" r="122" fill="url(#disc)" stroke="#FCCD55" stroke-opacity="0.35"/>
+    <g transform="translate(1133.6 193.6) scale(7.2)" fill="none" stroke="#FCCD55" stroke-width="0.42" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12H5M19 12h2.5M5.3 5.3l1.8 1.8M16.9 16.9l1.8 1.8M5.3 18.7l1.8-1.8M16.9 7.1l1.8-1.8"/></g>
+    <rect x="0.5" y="0.5" width="1599" height="559" rx="31.5" fill="none" stroke="#FFFFFF" stroke-opacity="0.08"/>
+  </g>
+  <g font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif">
+    <text x="112" y="176" fill="#FCCD55" font-size="17" font-weight="600" letter-spacing="2.6">LOKALES ENERGIE-DASHBOARD</text>
+    <text x="104" y="300" fill="#F5F5F7" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI Variable Display', 'Segoe UI', 'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="112" font-weight="600" letter-spacing="-3.7">SOLARIS</text>
+    <text x="112" y="366" fill="#D7DCE3" font-size="30" font-weight="400" letter-spacing="-0.4">PV-Anlage und Speicher auf einen Blick,</text>
+    <text x="112" y="406" fill="#D7DCE3" font-size="30" font-weight="400" letter-spacing="-0.4">selbst gehostet, mit Historie und Simulation.</text>
+    <text x="112" y="470" fill="#8D97A5" font-size="17" font-weight="500" letter-spacing="0.2">FastAPI  ·  SQLite  ·  MQTT  ·  Prometheus  ·  Home Assistant</text>
+  </g>
+</svg>

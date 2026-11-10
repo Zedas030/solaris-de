@@ -1,4 +1,10 @@
-# SOLARIS – lokales Energie-Dashboard
+<p align="center">
+  <img src="docs/assets/banner.svg" alt="SOLARIS: lokales Energie-Dashboard" width="100%">
+</p>
+
+<p align="center">
+  <a href="#was-es-kann">Was es kann</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="#schnellstart-mit-simulation">Schnellstart</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="docs/architektur.md">Architektur</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="docs/konfiguration.md">Konfiguration</a>&nbsp;&nbsp;·&nbsp;&nbsp;<a href="#zugangsdaten-und-eigene-werte">Zugangsdaten</a>
+</p>
 
 Ein kleines, selbst gehostetes Dashboard für eine PV-Anlage mit Speicher: FastAPI-Backend mit
 SQLite-Historie, dazu ein Frontend aus reinem HTML, CSS und JavaScript ohne Build-Schritt.
@@ -10,14 +16,20 @@ Entstanden im Oktober 2026 für ein Balkonkraftwerk mit Growatt-NOAH-Speicher au
 Raspberry Pi (Daten über noah-mqtt und Mosquitto, Hausverbrauch aus Home Assistant). Seitdem
 läuft es dort rund um die Uhr.
 
-![Dashboard im Simulationsmodus: Kennzahlen, Energiefluss, Tagesübersicht](docs/screenshots/dashboard.png)
+<p align="center">
+  <img src="docs/screenshots/dashboard.png" alt="Dashboard im Simulationsmodus: Kennzahlen, Energiefluss, Tagesübersicht" width="100%">
+</p>
 
-| | |
-|---|---|
-| ![Batteriespeicher](docs/screenshots/battery.png) | ![Geräte und Messpunkte](docs/screenshots/devices.png) |
-| Batteriespeicher mit Ladezustand und Leistung | Geräte und Messpunkte mit Rolle, Quelle und Status |
-| ![Datenquellen](docs/screenshots/integrations.png) | |
-| Datenquellen mit Test und Entdecken | |
+<table>
+<tr>
+<td width="50%" valign="top"><img src="docs/screenshots/battery.png" alt="Batteriespeicher" width="100%"><br><sub>Batteriespeicher mit Ladezustand und Leistung</sub></td>
+<td width="50%" valign="top"><img src="docs/screenshots/devices.png" alt="Geräte und Messpunkte" width="100%"><br><sub>Geräte und Messpunkte mit Rolle, Quelle und Status</sub></td>
+</tr>
+<tr>
+<td width="50%" valign="top"><img src="docs/screenshots/integrations.png" alt="Datenquellen" width="100%"><br><sub>Datenquellen mit Test und Entdecken</sub></td>
+<td width="50%"></td>
+</tr>
+</table>
 
 Alle Bilder zeigen die eingebaute Simulation, keine echten Messwerte.
 
